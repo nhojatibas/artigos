@@ -1,0 +1,20 @@
+<div class="signupForm">
+
+<h1> SIGN UP </h1>
+<form action="/signup" method="POST">
+  <div class="Username">
+    <label>Username</label>
+    {{ FORM.username(_class="form-control", placeholder="username") }}
+  </div>
+  <div class="Email">
+    <label>Email</label>
+    {{ FORM.email(_class="form-control", placeholder="e-mail") }}
+  </div>  
+  
+  <div class="Password">
+    <label>Password</label>
+    {{ FORM.password(_class="form-control", placeholder="senha") }}
+  </div>
+  <button type="submit" class="submit">signup</button>
+
+</div>
