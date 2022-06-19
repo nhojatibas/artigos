@@ -1,0 +1,15 @@
+<div class="loginForm">
+
+<h1> Login </h1>
+<form action="/login" method="POST">
+  <div class="Username">
+    <label>Username</label>
+    {{ FORM.username(_class="form-control", placeholder="username") }}
+  </div>
+  <div class="Password">
+    <label>Password</label>
+    {{ FORM.password(_class="form-control", placeholder="senha") }}
+  </div>
+  <button type="submit" class="submit">login</button>
+
+</div>

@@ -1,0 +1,73 @@
+* Site pessoal para estudo
+** Objetivo : construir pequeno site para hospedagem de artigos e acesso mediante senha de usuário, que permita gerar um modelo de site com dados em mysql, usando flask como framework, flaskform para formularios e flask login para gerenciar sessão. Tentar usar bootstrap para geração da interface (css). Implementar testes com pytest
+** Descricao da proposta
+*** Cadastro de usuários com senha (usada na autenticacao)
+*** Permitir 3 níveis de usuário
+**** SuperAdmin
+**** Admin
+**** Usuário
+*** Publicacao de artigos por usuários autenticados
+**** Artigos com Titulo, Conteudo, Autor (id-user-logado)
+**** Permitir que os artigos sejam classificados com 'n' etiquetas de assunto (#)
+**** Acesso dos artigos por etiquetas, por usuario (autor)
+*** Arquitetura
+**** WEB - flask framework
+**** Database - MySQL
+*** Rotas propostas
+**** / - home.html
+**** /users - users.html (lista de usuários)
+**** /articles - articles.html (lista de artigos)
+**** /tags - tags.html (lista de etiquetas)
+**** /roles - roles.html (lista de permissoes de usuário)
+**** /login
+**** /logout
+*** Diretório do projeto proposto
+#+begin_src diretorios
+./site-articles
+├── README.md         ..... Instrucoes
+├── env_dev.sh        ..... Variaveis de ambiente para DEV
+├── Makefile          ..... Makefile ????
+├── requirements.txt  ..... Pacotes python - dependencias
+├── articles          ..... Diretório da aplicacao
+│   ├── __init__.py   ..... __init__.py ?????
+│   └── app.py        ..... Arquivo inicial da aplicacao
+├── docker            ..... Diretório para container da aplicacao
+│   └── entrypoint.sh ..... Script inicial do container que roda a aplicacao
+├── doc               ..... Diretório para documentacao do desenvolvimento
+└── tests             ..... Diretório para os testes da aplicacao
+  #+end_src
+** Inicializando estrutura para desenvolvimento
+*** Desenvolvimento local
+**** python 3.8 com virtualenv
+***** Criar virtualenv
+#+begin_src shell
+virtualenv venv
+#+end_src
+***** Carregar virtualenv
+****** método 1
+#+begin_src shell
+. ./venv/bin/activate     # opcao 1
+#+end_src
+****** método 2
+#+begin_src shell
+source venv/bin/activate  # opcao 2
+#+end_src
+***** Desativar virtualenv
+#+begin_src shell
+deactivate
+#+end_src
+
+**** carregar variavel de ambiente (env_dev.sh)
+***** Desenvolvimento
+. ./env_dev.sh
+***** Producao
+
+**** Rodar a aplicação em modo DEV
+***** Atualizar PIP do virtualenv
+pip3 install --upgrade pip
+***** Instalar a aplicacao/dependencias (baseado no setuptools)
+pip3 install -e .
+***** Rodar a aplicação
+flask run -h 0.0.0.0
+
+
