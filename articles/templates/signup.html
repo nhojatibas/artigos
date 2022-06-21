@@ -1,5 +1,13 @@
 <div class="signupForm">
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div "notification">
+        {{ messages[0] }}. Go to <a href="{{ url_for('login_get') }}">login page</a>.
+    </div>
+{% endif %}
+{% endwith %}
+
 <h1> SIGN UP </h1>
 <form action="/signup" method="POST">
   <div class="Username">

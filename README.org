@@ -19,7 +19,51 @@
 **** /articles - articles.html (lista de artigos)
 **** /tags - tags.html (lista de etiquetas)
 **** /roles - roles.html (lista de permissoes de usuário)
-**** /login
+**** /login - login.html (login do usuário)
+***** método
+****** GET 
+- carrega form como instância da classe LoginForm
+- apresenta login.html
+****** POST
+- carrega form de request.form
+- verifica se username existe em db.articles.user (by username)
+******* user exists
+******** processa login
+******* user not exists
+******** redirect para '/signup' 
+**** /signup - signup.html (página de cadastro)
+***** método
+****** GET
+- carrega form como instância da classe SignupForm
+- apresenta signup.html
+****** POST
+- carrega form de request.form
+- verifica se username ou email existe em db.articles.user 
+******* user exists
+******** redirec para '/login'
+******* user not exists
+******** cadastra novo usuário no banco de dados
+******** redireciona para '/login'
+
+**** /profile - profile.html (página de edição) 
+***** método
+****** GET
+- pesquisa usuário logado e carrega dados para formulário
+- apresenta profile.html
+****** POST
+- carrega form de request.form
+- pesquisa usuário logado
+- pesquisa se há diferença dados REQUEST com dados da BASE
+******* Há diferença
+******** grava os dados
+******** mensagem de dados gravados com sucesso
+******** apresenta profile.html
+******* Não há diferença
+******** apresenta profile.html
+
+
+
+
 **** /logout
 *** Diretório do projeto proposto
 #+begin_src diretorios
