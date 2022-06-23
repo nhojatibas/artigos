@@ -1,11 +1,19 @@
 * Site pessoal para estudo
 ** Objetivo : construir pequeno site para hospedagem de artigos e acesso mediante senha de usuário, que permita gerar um modelo de site com dados em mysql, usando flask como framework, flaskform para formularios e flask login para gerenciar sessão. Tentar usar bootstrap para geração da interface (css). Implementar testes com pytest
 ** Descricao da proposta
-*** Cadastro de usuários com senha (usada na autenticacao)
 *** Permitir 3 níveis de usuário
 **** SuperAdmin
 **** Admin
 **** Usuário
+*** Cadastro de usuários com senha (usada na autenticacao)
+**** By Usuário
+**** By SuperAdmin
+*** Administração de usuários pelo SuperAdmin
+**** Inclusão
+**** Remoção
+**** Edição
+**** Visualização
+**** Troca de senha
 *** Publicacao de artigos por usuários autenticados
 **** Artigos com Titulo, Conteudo, Autor (id-user-logado)
 **** Permitir que os artigos sejam classificados com 'n' etiquetas de assunto (#)
@@ -15,22 +23,33 @@
 **** Database - MySQL
 *** Rotas propostas
 **** / - home.html
-**** /users - users.html (lista de usuários)
-**** /articles - articles.html (lista de artigos)
-**** /tags - tags.html (lista de etiquetas)
-**** /roles - roles.html (lista de permissoes de usuário)
+**** /users - users.html (lista de usuários) - somente superadmins
+**** /articles - articles.html (lista de artigos) - usuários filtrado pelos artigos com permissoes
+**** /tags - tags.html (lista de etiquetas) - somente superadmins
+**** /roles - roles.html (lista de permissoes de usuário) - somente superadmins
 **** /login - login.html (login do usuário)
 ***** método
 ****** GET 
 - carrega form como instância da classe LoginForm
 - apresenta login.html
 ****** POST
-- carrega form de request.form
+- captura USERNAME e PASSWORD de REQUEST
+- carrega instancia de LoginForm e SignupForm
 - verifica se username existe em db.articles.user (by username)
 ******* user exists
-******** processa login
+******** senha ok
+********* processa login
+********** método login_user para o objeto user
+********* redirect para '/login' 
+******** senha not ok
+********* redirect para '/profile'
 ******* user not exists
 ******** redirect para '/signup' 
+**** /logout
+***** método
+****** GET / POST
+- logout_user
+- redirect para '/login'
 **** /signup - signup.html (página de cadastro)
 ***** método
 ****** GET
@@ -44,27 +63,34 @@
 ******* user not exists
 ******** cadastra novo usuário no banco de dados
 ******** redireciona para '/login'
-
 **** /profile - profile.html (página de edição) 
 ***** método
-****** GET
-- pesquisa usuário logado e carrega dados para formulário
+****** GET / POST
+- carrega USERID de REQUEST
+- recupera USER (load_user by USERID)
 - apresenta profile.html
+**** /change_password - change_password.html
+****** GET
+- carrega form como instância da classe ChangePasswordForm
+- apresenta change_password.html
 ****** POST
-- carrega form de request.form
-- pesquisa usuário logado
-- pesquisa se há diferença dados REQUEST com dados da BASE
-******* Há diferença
-******** grava os dados
-******** mensagem de dados gravados com sucesso
-******** apresenta profile.html
-******* Não há diferença
-******** apresenta profile.html
-
-
-
-
-**** /logout
+- carrega form como instancia da classe ChangePasswordForm
+- captura USERNAME, PASSWORD, PASSWORD1 e PASSWORD2 de REQUEST
+******* username não existe
+******** mensagem 'usuario nao encontrado'
+******** redirect para 'change_password'
+******* password não bate
+******** mensagem 'senha atual incorreta'
+******** redirect para 'change_password'
+******* password1 not equal password2
+******** mensagem 'senha nao bate'
+******** redirect para 'change_password'
+******* nenhuma das acima
+******** troca a senha do usuário
+********* remove user (senha velha)
+********* add user (senha nova)
+******** mensagem 'senha trocada com sucesso'
+******** redirect para 'change_password'
 *** Diretório do projeto proposto
 #+begin_src diretorios
 ./site-articles
