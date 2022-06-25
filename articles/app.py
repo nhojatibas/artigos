@@ -2,7 +2,7 @@ from flask import Flask, render_template, flash, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired
-from flask_login import LoginManager, UserMixin, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
@@ -58,6 +58,11 @@ def create_app():
 
     @app.route("/")
     def index():
+        if current_user.is_active:
+            user = load_user(current_user.get_id())
+            flash(str(user.username))
+        else:
+            flash("user nao logado")
         return render_template("index.html")
 
     @app.route("/login", methods=['GET'])

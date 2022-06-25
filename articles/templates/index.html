@@ -1,1 +1,20 @@
-<h1>Articles</h1>
+<div class="Articles">
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div "notification">
+      {{ messages[0] }}.
+    </div>
+{% endif %}
+{% endwith %}
+
+    <h1>Articles</h1>
+    <ul>
+    <li><a href="login">login</a></li>
+    <li><a href="signup">signup</a></li>
+    <li><a href="logout">logout</a></li>
+    <li><a href="change_password">change password</a></li>
+    </ul>
+
+</div>
+

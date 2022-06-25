@@ -23,6 +23,14 @@
 **** Database - MySQL
 *** Rotas propostas
 **** / - home.html
+***** método
+****** GET/POST 
+verificar se current_user.is_authenticated é true (importado current_user de flask_login)
+******* existe
+mensagem "username"
+******* não existe
+mensagem "usernaologado"
+****** passa mensagem para renderizar "index.html"
 **** /users - users.html (lista de usuários) - somente superadmins
 **** /articles - articles.html (lista de artigos) - usuários filtrado pelos artigos com permissoes
 **** /tags - tags.html (lista de etiquetas) - somente superadmins
@@ -141,3 +149,8 @@ pip3 install -e .
 flask run -h 0.0.0.0
 
 
+** Pendencias
+*** TODO Adicionar acesso restrito para rotas logadas
+- import login_required de flask_login
+- decorator @login_required
+*** TODO Colocar flask-admin para administrar modelo de usuarios 
