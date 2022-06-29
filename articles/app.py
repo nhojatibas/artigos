@@ -1,9 +1,12 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from flask_sqlalchemy import SQLAlchemy
+
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 
@@ -51,6 +54,9 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = '/'
     login_manager.init_app(app)
+
+    admin = Admin(app, name='Artigos', template_mode='bootstrap3')
+    admin.add_view(ModelView(User, db.session))
 
     @login_manager.user_loader
     def load_user(user_id):

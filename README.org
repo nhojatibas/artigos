@@ -155,7 +155,9 @@ pip3 install -e .
 flask run -h 0.0.0.0
 
 ** Pendencias
-*** TODO Adicionar acesso restrito para rotas logadas
+*** DONE Adicionar acesso restrito para rotas logadas
+CLOSED: [2022-06-29 qua 12:29]
 - import login_required de flask_login
 - decorator @login_required
+  - foi necessário apontar login_manager.login_view = '/'
 *** TODO Colocar flask-admin para administrar modelo de usuarios 

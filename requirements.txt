@@ -1,4 +1,5 @@
 flask
+flask-admin
 flask-login
 flask-sqlalchemy
 Flask-WTF
