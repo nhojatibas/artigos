@@ -49,7 +49,7 @@ def create_app():
     db.init_app(app)
 
     login_manager = LoginManager()
-    login_manager.login_view = 'login'
+    login_manager.login_view = '/'
     login_manager.init_app(app)
 
     @login_manager.user_loader
@@ -92,6 +92,7 @@ def create_app():
 
     # Rota para LOGOUT
     @app.route("/logout")
+    @login_required
     def logout():
         logout_user()
         return redirect(url_for('login_get'))
@@ -128,12 +129,14 @@ def create_app():
 
     # Rota para PROFILE
     @app.route("/profile", methods=['GET', 'POST'])
+    @login_required
     def profile():
         user = load_user(request.args['USERID'])
         return render_template('profile.html', NOME=user.username)
 
     # Rota para CHANGE PASSWORD
     @app.route("/change_password", methods=['GET', 'POST'])
+    @login_required
     def change_password():
         if request.method == 'GET':
             form = ChangePasswordForm()

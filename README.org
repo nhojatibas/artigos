@@ -139,7 +139,13 @@ deactivate
 ***** Desenvolvimento
 . ./env_dev.sh
 ***** Producao
-
+**** desativar variaveis de ambiente
+***** Desenvolvimento
+#+begin_src sh
+unset FLASK_APP
+unset FLASK_DEBUG
+unset FLASK_ENV
+#+end_src
 **** Rodar a aplicação em modo DEV
 ***** Atualizar PIP do virtualenv
 pip3 install --upgrade pip
@@ -147,7 +153,6 @@ pip3 install --upgrade pip
 pip3 install -e .
 ***** Rodar a aplicação
 flask run -h 0.0.0.0
-
 
 ** Pendencias
 *** TODO Adicionar acesso restrito para rotas logadas
