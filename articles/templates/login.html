@@ -1,23 +1,32 @@
-<div class="loginForm">
+{% from 'bootstrap5/form.html' import render_form %}
+{% extends 'base.html' %}
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div "notification">
-        {{ messages[0] }}. Go to <a href="{{ url_for('login_get') }}">login page</a>.
-    </div>
-{% endif %}
-{% endwith %}
+{% block content %}
+  <h1>LOGIN - Site de publicacao de artigos</h1>
+  <p>Faça sua autenticação</p>
+  {{ render_form(FORM) }}
+{% endblock %}
 
-<h1> Login </h1>
-<form action="/login" method="POST">
-  <div class="Username">
-    <label>Username</label>
-    {{ FORM.username(_class="form-control", placeholder="username") }}
-  </div>
-  <div class="Password">
-    <label>Password</label>
-    {{ FORM.password(_class="form-control", placeholder="senha") }}
-  </div>
-  <button type="submit" class="submit">login</button>
+<!-- <div class="loginForm"> -->
 
-</div>
+<!-- {% with messages = get_flashed_messages() %} -->
+<!-- {% if messages %} -->
+<!--     <div "notification"> -->
+<!--         {{ messages[0] }}. Go to <a href="{{ url_for('login_get') }}">login page</a>. -->
+<!--     </div> -->
+<!-- {% endif %} -->
+<!-- {% endwith %} -->
+
+<!-- <h1> Login </h1> -->
+<!-- <form action="/login" method="POST"> -->
+<!--   <div class="Username"> -->
+<!--     <label>Username</label> -->
+<!--     {{ FORM.username(_class="form-control", placeholder="username") }} -->
+<!--   </div> -->
+<!--   <div class="Password"> -->
+<!--     <label>Password</label> -->
+<!--     {{ FORM.password(_class="form-control", placeholder="senha") }} -->
+<!--   </div> -->
+<!--   <button type="submit" class="submit">login</button> -->
+
+<!-- </div> -->

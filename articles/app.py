@@ -4,7 +4,8 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField
+from flask_bootstrap import Bootstrap5
+from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -18,12 +19,14 @@ db = SQLAlchemy()
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
+    submit = SubmitField()
 
 
 class SignupForm(FlaskForm):
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
+    submit = SubmitField()
 
 
 class ChangePasswordForm(FlaskForm):
@@ -31,6 +34,7 @@ class ChangePasswordForm(FlaskForm):
     password = PasswordField("password", validators=[DataRequired()])
     password1 = PasswordField("password", validators=[DataRequired()])
     password2 = PasswordField("password", validators=[DataRequired()])
+    submit = SubmitField()
 
 
 # Databases
@@ -48,6 +52,10 @@ def create_app():
     app.config["SECRET_KEY"] = "secret"
     app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://nhoj:123456@localhost/articles'
     app.config["DEBUG"] = True
+    app.config["FLASK_ADMIN_SWATCH"] = 'slate'
+    app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lux'
+
+    bootstrap = Bootstrap5(app)
 
     db.init_app(app)
 
@@ -55,8 +63,12 @@ def create_app():
     login_manager.login_view = '/'
     login_manager.init_app(app)
 
-    admin = Admin(app, name='Artigos', template_mode='bootstrap3')
+    admin = Admin()
+    #admin = Admin(app, name='Artigos', template_mode='bootstrap3')
+    admin.name = 'Artigos'
+    admin.template_mode = 'bootstrap3'
     admin.add_view(ModelView(User, db.session))
+    admin.init_app(app)
 
     @login_manager.user_loader
     def load_user(user_id):

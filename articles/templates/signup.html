@@ -1,28 +1,38 @@
-<div class="signupForm">
+{% from 'bootstrap5/form.html' import render_form %}
+{% extends 'base.html' %}
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div "notification">
-        {{ messages[0] }}. Go to <a href="{{ url_for('login_get') }}">login page</a>.
-    </div>
-{% endif %}
-{% endwith %}
-
-<h1> SIGN UP </h1>
-<form action="/signup" method="POST">
-  <div class="Username">
-    <label>Username</label>
-    {{ FORM.username(_class="form-control", placeholder="username") }}
-  </div>
-  <div class="Email">
-    <label>Email</label>
-    {{ FORM.email(_class="form-control", placeholder="e-mail") }}
-  </div>  
+{% block content %}
+  <h1>SIGN UP - Site de publicacao de artigos</h1>
+  <p>Faça seu cadastro</p>
+  {{ render_form(FORM) }}
+{% endblock %}
   
-  <div class="Password">
-    <label>Password</label>
-    {{ FORM.password(_class="form-control", placeholder="senha") }}
-  </div>
-  <button type="submit" class="submit">signup</button>
 
-</div>
+<!-- <div class="signupForm"> -->
+
+<!-- {% with messages = get_flashed_messages() %} -->
+<!-- {% if messages %} -->
+<!--     <div "notification"> -->
+<!--         {{ messages[0] }}. Go to <a href="{{ url_for('login_get') }}">login page</a>. -->
+<!--     </div> -->
+<!-- {% endif %} -->
+<!-- {% endwith %} -->
+
+<!-- <h1> SIGN UP </h1> -->
+<!-- <form action="/signup" method="POST"> -->
+<!--   <div class="Username"> -->
+<!--     <label>Username</label> -->
+<!--     {{ FORM.username(_class="form-control", placeholder="username") }} -->
+<!--   </div> -->
+<!--   <div class="Email"> -->
+<!--     <label>Email</label> -->
+<!--     {{ FORM.email(_class="form-control", placeholder="e-mail") }} -->
+<!--   </div>   -->
+  
+<!--   <div class="Password"> -->
+<!--     <label>Password</label> -->
+<!--     {{ FORM.password(_class="form-control", placeholder="senha") }} -->
+<!--   </div> -->
+<!--   <button type="submit" class="submit">signup</button> -->
+
+<!-- </div> -->

@@ -160,4 +160,27 @@ CLOSED: [2022-06-29 qua 12:29]
 - import login_required de flask_login
 - decorator @login_required
   - foi necessário apontar login_manager.login_view = '/'
-*** TODO Colocar flask-admin para administrar modelo de usuarios 
+*** DONE Colocar flask-admin para administrar modelo de usuarios 
+CLOSED: [2022-07-03 dom 21:51]
+*** DONE Incorporar bootstrap-flask
+CLOSED: [2022-07-03 dom 22:02]
+**** Bootstrap - framework css 
+**** Gerar extensão de Template
+***** base.html
+***** {% block content %}
+**** modulo padrao (flask-bootstrap) - compativel com bootstrap 2 e 3 (antigos)
+**** modulo escolhido (bootstrap-flask) aceita bootstrap 4 e 5 (mais modernos)
+***** Exemplo : https://bootstrap-flask.readthedocs.io/en/stable/examples/
+instalado : ~/lixo/bootstrap/bootstrap-flask/
+. ./venv/bin/activate
+python bootstrap5/app.py
+**** Import dos css dentro do template
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+**** Configuração de Thema
+app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lux'
+*** TODO Criar regras de negócio para artigos
+**** Mapa de URLs
+**** Definir URLs que acessam logada e URLs que acessam sem Login
+**** Lógica para status de LOGIN nas páginas
+
