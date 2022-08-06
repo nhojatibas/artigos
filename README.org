@@ -179,8 +179,13 @@ python bootstrap5/app.py
 {% from 'bootstrap5/utils.html' import render_messages %}
 **** Configuração de Thema
 app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lux'
+*** DONE Adicionar saídas de LOG através de logging
+CLOSED: [2022-07-10 dom 18:59]
 *** TODO Criar regras de negócio para artigos
 **** Mapa de URLs
 **** Definir URLs que acessam logada e URLs que acessam sem Login
 **** Lógica para status de LOGIN nas páginas
+**** Desenhar estrutura de banco de dados de artigos
+**** Separar aplicacao por modulos
+**** Separa aplicacao com blueprints
 

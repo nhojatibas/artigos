@@ -11,8 +11,15 @@ from wtforms.validators import DataRequired
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
 
+# Instanciando objetos dos módulos e propriedades padrão destes
 logger = logging.getLogger("werkzeug")
 db = SQLAlchemy()
+bs = Bootstrap5()
+login_manager = LoginManager()
+login_manager.login_view = '/'
+admin = Admin()
+admin.name = 'Artigos'
+admin.template_mode = 'bootstrap3'
 
 
 # Formularios
@@ -45,29 +52,32 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
 
 
+# Instanciando objetos dos módulos e propriedades padrão destes
+logger = logging.getLogger("werkzeug")
+db = SQLAlchemy()
+bs = Bootstrap5()
+login_manager = LoginManager()
+login_manager.login_view = '/'
+admin = Admin()
+admin.name = 'Artigos'
+admin.template_mode = 'bootstrap3'
+admin.add_view(ModelView(User, db.session))
+
 def create_app():
 
     app = Flask(__name__)
 
+    # Injetando configurações no APP
     app.config["SECRET_KEY"] = "secret"
     app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://nhoj:123456@localhost/articles'
     app.config["DEBUG"] = True
     app.config["FLASK_ADMIN_SWATCH"] = 'slate'
-    app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lux'
+    app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'
 
-    bootstrap = Bootstrap5(app)
-
+    # Inicializando os módulos no APP
+    bs.init_app(app)
     db.init_app(app)
-
-    login_manager = LoginManager()
-    login_manager.login_view = '/'
     login_manager.init_app(app)
-
-    admin = Admin()
-    #admin = Admin(app, name='Artigos', template_mode='bootstrap3')
-    admin.name = 'Artigos'
-    admin.template_mode = 'bootstrap3'
-    admin.add_view(ModelView(User, db.session))
     admin.init_app(app)
 
     @login_manager.user_loader
@@ -78,14 +88,21 @@ def create_app():
     def index():
         if current_user.is_active:
             user = load_user(current_user.get_id())
+            logger.info("index:GET:user logged in:"+user.username)
             flash(str(user.username))
         else:
+            logger.info("index:GET:user not logged in")
             flash("user nao logado")
         return render_template("index.html")
 
     @app.route("/login", methods=['GET'])
     def login_get():
         form = LoginForm()
+        if current_user.is_active:
+            user = load_user(current_user.get_id())
+            logger.info("/login:GET:user logged in:"+user.username)
+        else:
+            logger.info("/login:GET:user not logged in")
         return render_template("login.html", FORM=form)
 
     @app.route("/login", methods=['POST'])
@@ -98,14 +115,17 @@ def create_app():
         user = User.query.filter_by(username=username).first()
 
         if not user:
+            logger.info("/login:POST:user not found:"+username)
             flash("Por favor, faça cadastramento para acesso")
             return redirect(url_for('signup', FORM=signupform))
         elif not check_password_hash(user.password, password):
+            logger.info("/login:POST:wrong password:"+username)
             flash('Senha incorreta')
             return redirect(url_for('login_post', FORM=loginform))
         else:
+            logger.info("/login:POST:login sucessuful:"+username)
             login_user(user)
-            flash('Bem Vindo')
+            flash('Bem Vindo '+username)
             return redirect(url_for('profile', USERID=user.id))
 
     # Rota para LOGOUT
@@ -140,7 +160,7 @@ def create_app():
                 new_user = User(
                     username=form.username.username,
                     email=form.username.email,
-                    password=generate_password_hash(form.username.password, method='md5'))
+                    password=generate_password_hash(form.username.password, method = 'md5'))
                 db.session.add(new_user)
                 db.session.commit()
             return render_template('login.html', FORM=form)
@@ -150,6 +170,7 @@ def create_app():
     @login_required
     def profile():
         user = load_user(request.args['USERID'])
+        logger.info("/profile:GET/POST:user data showed:"+user.username)
         return render_template('profile.html', NOME=user.username)
 
     # Rota para CHANGE PASSWORD
