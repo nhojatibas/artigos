@@ -182,10 +182,41 @@ app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lux'
 *** DONE Adicionar saídas de LOG através de logging
 CLOSED: [2022-07-10 dom 18:59]
 *** TODO Criar regras de negócio para artigos
-**** Mapa de URLs
-**** Definir URLs que acessam logada e URLs que acessam sem Login
-**** Lógica para status de LOGIN nas páginas
-**** Desenhar estrutura de banco de dados de artigos
-**** Separar aplicacao por modulos
-**** Separa aplicacao com blueprints
+**** DONE Definir estrutura de Banco de Dados
+CLOSED: [2022-08-15 seg 11:17]
+***** Tabelas de dados
+| Data tables |
+| article     |
+| tag         |
+| user        |
+***** Tabelas de correlação
+| Correlation tables      | Desc                                   |
+| article-tag-association | Relaciona Tags com os Artigos          |
+| user-article-permission | Define permissao ao acesso dos artigos |
+**** TODO Mapa de URLs preliminar
+***** Para facilitar a implementacao da pesquisa, usar flask admin para gerar as telas de input de dados e separar a lógica de consulta para entrega no primeiro momemento
+****** aplicacao
+******* mapinha
+******** <url>/login
+******** <url>/logout
+******** <url>/search
+******** <url>/article/<id>
+****** admin
+- user
+- artigos
+- tags
+******* Adicionar os modelos de dados para as tabelas complementares (tags, artigos)
+# Adicionar classes de dados ao Flask Admin
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Article, db.session))
+admin.add_view(ModelView(Tag, db.session))
+******* mapinha
+******** <url>/admin/user
+******** <url>/admin/article
+******** <url>/admin/tag
+**** TODO Mapa de URLs final
+**** TODO Definir URLs que acessam logada e URLs que acessam sem Login
+**** TODO Lógica para status de LOGIN nas páginas
+**** TODO Separar aplicacao por modulos
+**** TODO Separa aplicacao com blueprints
 

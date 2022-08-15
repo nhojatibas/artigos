@@ -52,6 +52,17 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
 
 
+class Article(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), unique=True)
+    content = db.Column(db.Text)
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tag = db.Column(db.String(50), unique=True)
+
+
 # Instanciando objetos dos módulos e propriedades padrão destes
 logger = logging.getLogger("werkzeug")
 db = SQLAlchemy()
@@ -61,7 +72,10 @@ login_manager.login_view = '/'
 admin = Admin()
 admin.name = 'Artigos'
 admin.template_mode = 'bootstrap3'
+# Adicionar classes de dados ao Flask Admin
 admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Article, db.session))
+admin.add_view(ModelView(Tag, db.session))
 
 def create_app():
 
