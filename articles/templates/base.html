@@ -1,0 +1,38 @@
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+<html>
+  <head>
+    {{ bootstrap.load_css() }}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="exibe/esconde itens">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+	    {{ render_nav_item('webui.index', 'Home', use_li=True) }}
+	    {{ render_nav_item('webui.login', 'Login', use_li=True) }}
+            {{ render_nav_item('webui.signup', 'Sign Up', use_li=True) }}
+            {{ render_nav_item('webui.change_password', 'Change Password', use_li=True) }}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      {{ render_messages(container=False, dismissible=True) }}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center">
+        {% block footer %}
+            <small> &copy; 2018–<script>document.write(new Date().getFullYear())</script> <a href="https://github.com/nhojatibas">by nhojatibas</a>
+            </small>
+        {% endblock %}
+    </footer>
+    
+  </body>
+</html>

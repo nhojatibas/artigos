@@ -193,7 +193,8 @@ CLOSED: [2022-08-15 seg 11:17]
 | Correlation tables      | Desc                                   |
 | article-tag-association | Relaciona Tags com os Artigos          |
 | user-article-permission | Define permissao ao acesso dos artigos |
-**** TODO Mapa de URLs preliminar
+**** DONE Mapa de URLs preliminar
+CLOSED: [2022-08-17 qua 19:40]
 ***** Para facilitar a implementacao da pesquisa, usar flask admin para gerar as telas de input de dados e separar a lógica de consulta para entrega no primeiro momemento
 ****** aplicacao
 ******* mapinha
@@ -214,9 +215,52 @@ admin.add_view(ModelView(Tag, db.session))
 ******** <url>/admin/user
 ******** <url>/admin/article
 ******** <url>/admin/tag
+**** DONE Separar aplicacao por modulos
+CLOSED: [2022-08-17 qua 19:40]
+***** Definido modo factory para registro de extensoes externas
+***** Extensoes FLASK externas registradas usadas até o momento:
+#+begin_src lista de extensoes
+from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_admin import Admin
+#+end_src
+***** Definicao de Modelos (banco de dados) e Formularios
+#+begin_src modelos/forms
+from articles.models import User
+from articles.forms import LoginForm, SignupForm, ChangePasswordForm
+#+end_src
+
+***** Extensoes diversas
+#+begin_src
+from werkzeug.security import generate_password_hash, check_password_hash
+import logging
+#+end_src
+**** DONE Separa aplicacao com blueprints
+CLOSED: [2022-08-17 qua 19:40]
+***** Definicao de Blueprints
+#+begin_src python
+bp = Blueprint("webui", __name__)
+
+bp.add_url_rule("/",
+                view_func=index,
+                methods=['GET'])
+bp.add_url_rule("/login",
+                view_func=login,
+                methods=['GET', 'POST'])
+bp.add_url_rule("/logout",
+                view_func=logout,
+                methods=['GET'])
+bp.add_url_rule("/signup",
+                view_func=signup,
+                methods=['GET', 'POST'])
+bp.add_url_rule("/profile",
+                view_func=profile,
+                methods=['GET'])
+bp.add_url_rule("/change_password",
+                view_func=change_password,
+                methods=['GET', 'POST'])
+#+end_src
 **** TODO Mapa de URLs final
 **** TODO Definir URLs que acessam logada e URLs que acessam sem Login
 **** TODO Lógica para status de LOGIN nas páginas
-**** TODO Separar aplicacao por modulos
-**** TODO Separa aplicacao com blueprints
-
